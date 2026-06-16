@@ -167,7 +167,7 @@ color:#9d9d9d;
 Kalradya'nın en benzersiz içeriklerinin olduğu tek kanalın sitesine hoş geldiniz.
 </p>
 
-<a class="button" href="https://youtube.com/Oprionn" target="_blank">
+<a class="button" href="https://www.youtube.com/@Oprionn/videos" target="_blank">
 YouTube Kanalı
 </a>
 
@@ -201,7 +201,7 @@ YouTube Kanalı
 
 <h3>Son Video #2</h3>
 
-<p>Calradia yeniden karışıyor.</p>
+<p>Kalradya yeniden karışıyor.</p>
 
 </div>
 
@@ -239,7 +239,19 @@ YouTube Kanalı
 Kalradya'da bu hafta yaşanan gelişmeler.
 </p>
 
-<a class="button" href="gazete1.png" target="_blank">
+<div style="display:flex;align-items:center;gap:12px;margin-top:20px;">
+
+<button id="likeBtn1" onclick="likeGazete1()" style="
+background:none;
+border:none;
+font-size:26px;
+cursor:pointer;
+color:#ff5a76;
+">
+🤍 <span id="likeCount1">0</span>
+</button>
+
+<a class="button" href="gazete1.png" target="_blank" style="margin-top:0;">
 Gazeteyi Aç
 </a>
 
@@ -249,7 +261,40 @@ Gazeteyi Aç
 
 </div>
 
+</div>
+
 </section>
+
+<script>
+
+let likes = localStorage.getItem("gazete1Likes");
+if(likes===null){
+likes=0;
+}
+document.getElementById("likeCount1").textContent=likes;
+
+if(localStorage.getItem("gazete1Liked")){
+document.getElementById("likeBtn1").innerHTML="❤️ <span id='likeCount1'>"+likes+"</span>";
+document.getElementById("likeBtn1").disabled=true;
+document.getElementById("likeBtn1").style.cursor="default";
+}
+
+function likeGazete1(){
+
+if(localStorage.getItem("gazete1Liked")) return;
+
+likes++;
+
+localStorage.setItem("gazete1Likes",likes);
+localStorage.setItem("gazete1Liked","true");
+
+document.getElementById("likeBtn1").innerHTML="❤️ <span id='likeCount1'>"+likes+"</span>";
+document.getElementById("likeBtn1").disabled=true;
+document.getElementById("likeBtn1").style.cursor="default";
+
+}
+
+</script>
   
 <footer>
 
