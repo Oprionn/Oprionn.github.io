@@ -265,32 +265,44 @@ Gazeteyi Aç
 
 </section>
 
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
 <script>
 
-let likes = localStorage.getItem("gazete1Likes");
-if(likes===null){
-likes=0;
-}
-document.getElementById("likeCount1").textContent=likes;
+const firebaseConfig = {
+  databaseURL: "https://oprionn01-default-rtdb.europe-west1.firebasedatabase.app"
+};
 
-if(localStorage.getItem("gazete1Liked")){
-document.getElementById("likeBtn1").innerHTML="❤️ <span id='likeCount1'>"+likes+"</span>";
-document.getElementById("likeBtn1").disabled=true;
-document.getElementById("likeBtn1").style.cursor="default";
-}
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+const likeRef = db.ref("gazete1/likes");
+
+// 🔥 canlı sayıyı çek
+likeRef.on("value", (snap) => {
+  document.getElementById("likeCount1").innerText = snap.val() || 0;
+});
+
+// 🚫 aynı kişi 1 kere basabilsin (tarayıcı bazlı)
+let liked = localStorage.getItem("gazete1Liked");
 
 function likeGazete1(){
 
-if(localStorage.getItem("gazete1Liked")) return;
+if(liked) return;
 
-likes++;
+// ➕ Firebase'e +1 ekle
+likeRef.transaction((current) => {
+  return (current || 0) + 1;
+});
 
-localStorage.setItem("gazete1Likes",likes);
+// 🚫 tekrar basmayı engelle
 localStorage.setItem("gazete1Liked","true");
+liked = true;
 
-document.getElementById("likeBtn1").innerHTML="❤️ <span id='likeCount1'>"+likes+"</span>";
-document.getElementById("likeBtn1").disabled=true;
-document.getElementById("likeBtn1").style.cursor="default";
+// ❤️ görünümü değiştir
+document.getElementById("likeBtn1").innerHTML =
+"❤️ <span id='likeCount1'></span>";
 
 }
 
