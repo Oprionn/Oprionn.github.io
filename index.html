@@ -289,15 +289,12 @@ let liked = localStorage.getItem("gazete1Liked");
 
 function likeGazete1(){
 
-if(liked) return;
-
 // ➕ Firebase'e +1 ekle
 likeRef.transaction((current) => {
   return (current || 0) + 1;
 });
 
 // 🚫 tekrar basmayı engelle
-localStorage.setItem("gazete1Liked","true");
 liked = true;
 
 // ❤️ görünümü değiştir
