@@ -296,7 +296,13 @@ likeRef.transaction((current) => {
 
 // 🚫 tekrar basmayı engelle
 liked = true;
+function likeGazete1(){
 
+likeRef.transaction((current) => {
+  return (current || 0) + 1;
+});
+
+}
 // ❤️ görünümü değiştir
 document.getElementById("likeBtn1").innerHTML =
 "❤️ <span id='likeCount1'></span>";
